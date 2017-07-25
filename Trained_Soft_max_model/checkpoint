@@ -1,0 +1,2 @@
+model_checkpoint_path: "Soft_max_model-1000"
+all_model_checkpoint_paths: "Soft_max_model-1000"
