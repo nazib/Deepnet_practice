@@ -21,8 +21,8 @@ def max_pool_2x2(x):
                         strides=[1, 2, 2, 1], padding='SAME')
 
 ###################### Network parameters
-batch_size=100
-epochs=100
+batch_size=20
+epochs=1000
 learning_rate=0.5
 dropout_ratio=tf.placeholder(tf.float32)  
   
@@ -79,16 +79,13 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 with tf.Session() as sess:
   sess.run(tf.global_variables_initializer())
-  for i in range(20000):
-    batch = mnist.train.next_batch(50)
+  for i in range(epochs):
+    batch = mnist.train.next_batch(batch_size)
     if i % 100 == 0:
       train_accuracy = accuracy.eval(feed_dict={
           X: batch[0], y_: batch[1], dropout_ratio: 1.0})
       print('step %d, training accuracy %g' % (i, train_accuracy))
     optim.run(feed_dict={X: batch[0], y_: batch[1], dropout_ratio: 0.5})
-
-  print('test accuracy %g' % accuracy.eval(feed_dict={
-      X: mnist.test.images, y_: mnist.test.labels, dropout_ratio: 1.0}))
 
 
 
